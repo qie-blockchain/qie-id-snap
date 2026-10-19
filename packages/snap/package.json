@@ -1,0 +1,67 @@
+{
+  "name": "@qie-blockchain/qie-id-snap",
+  "version": "0.1.0",
+  "description": "Send to QIE IDs (name.qie) in MetaMask. Resolves a QIE ID to the owner's address on the network you are sending on.",
+  "keywords": [
+    "metamask",
+    "snap",
+    "qie",
+    "qie-id",
+    "name-resolution"
+  ],
+  "homepage": "https://github.com/qie-blockchain/qie-id-snap#readme",
+  "bugs": {
+    "url": "https://github.com/qie-blockchain/qie-id-snap/issues"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/qie-blockchain/qie-id-snap.git"
+  },
+  "license": "(MIT-0 OR Apache-2.0)",
+  "sideEffects": false,
+  "main": "./dist/bundle.js",
+  "files": [
+    "dist/",
+    "images/",
+    "snap.manifest.json"
+  ],
+  "scripts": {
+    "allow-scripts": "yarn workspace root allow-scripts",
+    "build": "mm-snap build",
+    "build:clean": "yarn clean && yarn build",
+    "clean": "rimraf dist",
+    "lint": "yarn lint:eslint && yarn lint:misc --check",
+    "lint:eslint": "eslint . --cache",
+    "lint:fix": "yarn lint:eslint --fix && yarn lint:misc --write",
+    "lint:misc": "prettier '**/*.json' '**/*.md' '!snap.manifest.json' --ignore-path ../../.gitignore --no-error-on-unmatched-pattern",
+    "prepublishOnly": "mm-snap manifest",
+    "serve": "mm-snap serve",
+    "start": "mm-snap watch",
+    "test": "jest"
+  },
+  "dependencies": {
+    "@metamask/abi-utils": "3.0.0",
+    "@metamask/snaps-sdk": "12.1.0",
+    "@metamask/utils": "11.12.1",
+    "@noble/hashes": "1.8.0",
+    "@scure/base": "1.2.6"
+  },
+  "devDependencies": {
+    "@jest/globals": "29.5.0",
+    "@metamask/snaps-cli": "8.4.1",
+    "@metamask/snaps-jest": "10.2.1",
+    "eslint": "9.21.0",
+    "jest": "29.5.0",
+    "rimraf": "3.0.2",
+    "ts-jest": "29.1.0",
+    "typescript": "5.7.3"
+  },
+  "packageManager": "yarn@3.2.1",
+  "engines": {
+    "node": "^20 || >=22"
+  },
+  "publishConfig": {
+    "access": "public",
+    "registry": "https://registry.npmjs.org/"
+  }
+}

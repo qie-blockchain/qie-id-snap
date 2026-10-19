@@ -1,0 +1,31 @@
+{
+  "version": "0.1.0",
+  "description": "Send to QIE IDs (name.qie) in MetaMask. Resolves a QIE ID to the owner's address on the network you are sending on.",
+  "proposedName": "QIE ID",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/qie-blockchain/qie-id-snap.git"
+  },
+  "source": {
+    "shasum": "nbpfVr1CrmYOfdsT5c9uDM1pSp2Wt9EmdbSIeP4CZqY=",
+    "location": {
+      "npm": {
+        "filePath": "dist/bundle.js",
+        "iconPath": "images/icon.svg",
+        "packageName": "@qie-blockchain/qie-id-snap",
+        "registry": "https://registry.npmjs.org/"
+      }
+    }
+  },
+  "initialPermissions": {
+    "endowment:name-lookup": {
+      "matchers": {
+        "tlds": ["qie"]
+      },
+      "maxRequestTime": 15000
+    },
+    "endowment:network-access": {}
+  },
+  "platformVersion": "12.1.0",
+  "manifestVersion": "0.1"
+}
