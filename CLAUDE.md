@@ -9,7 +9,7 @@ A MetaMask Snap that resolves QIE IDs (`alice.qie`) to the owner's address on th
 - `packages/snap` — the Snap (`@qie-blockchain/qie-id-snap`), the only package published to npm.
 - `packages/site` — Gatsby install page. `SNAP_ORIGIN` env var selects the Snap; defaults to `local:http://localhost:8080`, and `.env.production.dist` points at the npm package.
 
-Design rationale and open questions live in `docs/implementation-plan.md`.
+Design rationale and open questions live in `docs/implementation-plan.md`. The npm publish and MetaMask allowlisting process is in `docs/publishing.md`.
 
 ## Commands
 
