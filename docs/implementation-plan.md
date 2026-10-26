@@ -206,7 +206,7 @@ Not supported for now. Address lookups return `null`. If it is added later, use 
 
 ## 6. Open questions for the team
 
-1. **`.hovr` names:** should the Snap also match the `.hovr` TLD? The README mentions `.hovr` zones, but the extension's send flow only triggers on `.qie`.
+1. ~~**`.hovr` names:** should the Snap also match the `.hovr` TLD?~~ **Decided (2026-10-26): no.** The Snap matches `.qie` only. The Hovr Metadata contract is still queried, because it holds premium `.qie` IDs.
 2. **Testnet:** the extension calls the _mainnet_ contract addresses over the QIE testnet RPC. Do these contracts exist on testnet (1983)? If not, the Snap should always use mainnet, which is what this plan assumes.
 3. **Per-chain EVM addresses:** today all EVM chains share one `evm` record. Is per-chain EVM mapping (e.g. a different address on BSC) planned? If so, define the key format now, for example `evm:56`, and have the Snap try it before `evm`.
 4. **npm scope / publisher:** which npm org publishes the package (e.g. `@qie/qie-id-snap`), and who is the support contact for the Directory listing?
