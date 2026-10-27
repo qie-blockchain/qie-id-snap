@@ -1,8 +1,8 @@
 import styled from 'styled-components';
 
 import {
-  ConnectButton,
-  InstallFlaskButton,
+  InstallButton,
+  InstallMetaMaskButton,
   ReconnectButton,
   Card,
 } from '../components';
@@ -96,12 +96,8 @@ const ErrorMessage = styled.div`
 
 const Index = () => {
   const { error } = useMetaMaskContext();
-  const { isFlask, snapsDetected, installedSnap } = useMetaMask();
+  const { isMetaMaskReady, installedSnap } = useMetaMask();
   const requestSnap = useRequestSnap();
-
-  const isMetaMaskReady = isLocalSnap(defaultSnapOrigin)
-    ? isFlask
-    : snapsDetected;
 
   return (
     <Container>
@@ -114,16 +110,17 @@ const Index = () => {
       <CardContainer>
         {error && (
           <ErrorMessage>
-            <b>An error happened:</b> {error.message}
+            <b>Something went wrong:</b> {error.message}
           </ErrorMessage>
         )}
         {!isMetaMaskReady && (
           <Card
             content={{
-              title: 'Install',
-              description:
-                'Snaps is pre-release software only available in MetaMask Flask, a canary distribution for developers with access to upcoming features.',
-              button: <InstallFlaskButton />,
+              title: 'Get MetaMask',
+              description: isLocalSnap(defaultSnapOrigin)
+                ? 'Local Snaps run only in MetaMask Flask, the developer build of MetaMask.'
+                : 'You need the MetaMask browser extension to use QIE IDs.',
+              button: <InstallMetaMaskButton />,
             }}
             fullWidth
           />
@@ -131,11 +128,11 @@ const Index = () => {
         {!installedSnap && (
           <Card
             content={{
-              title: 'Connect',
+              title: 'Install',
               description:
-                'Install the QIE ID Snap to resolve QIE IDs when sending funds.',
+                'Add QIE ID to MetaMask so you can send funds to a QIE ID instead of a long address.',
               button: (
-                <ConnectButton
+                <InstallButton
                   onClick={requestSnap}
                   disabled={!isMetaMaskReady}
                 />
@@ -149,7 +146,7 @@ const Index = () => {
             content={{
               title: 'Reconnect',
               description:
-                'While connected to a local running snap this button will always be displayed in order to update the snap if a change is made.',
+                'Reinstall the local Snap to load your latest changes.',
               button: (
                 <ReconnectButton
                   onClick={requestSnap}

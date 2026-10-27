@@ -139,6 +139,8 @@ Don't submit pre-releases for allowlisting.
    - Version to allowlist: the version you just published.
    - Auditor and audit report: leave blank (no audit required, see above).
    - Support details, images and demo video from step 1.
+   - Privacy: link the Privacy section of `packages/snap/README.md`. Each lookup
+     sends the QIE ID to the QIE RPC service; nothing else is sent or stored.
 3. Wait for review. Every Snap needs at least two approvals from the MetaMask
    team, who check that it works and is well designed. MetaMask doesn't publish
    a timeline. Respond to any questions they send.

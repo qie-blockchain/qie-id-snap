@@ -4,6 +4,7 @@ import { useMetaMaskContext } from './MetamaskContext';
 import { useRequest } from './useRequest';
 import { defaultSnapOrigin } from '../config';
 import type { GetSnapsResponse } from '../types';
+import { isLocalSnap } from '../utils';
 
 /**
  * A hook to retrieve useful data from MetaMask.
@@ -53,5 +54,10 @@ export const useMetaMask = () => {
     detect().catch(console.error);
   }, [provider]);
 
-  return { isFlask, snapsDetected, installedSnap, getSnap };
+  // Local Snaps only install in Flask; published Snaps install in any MetaMask with Snaps.
+  const isMetaMaskReady = isLocalSnap(defaultSnapOrigin)
+    ? isFlask
+    : snapsDetected;
+
+  return { isFlask, snapsDetected, isMetaMaskReady, installedSnap, getSnap };
 };
