@@ -1,5 +1,5 @@
 import { METADATA_CONTRACTS, TLD } from './config';
-import { getRecord } from './contracts';
+import { getRecords } from './contracts';
 import type { Network } from './networks';
 
 const DOMAIN_PATTERN = new RegExp(`^[a-z0-9-]+\\.${TLD}$`, 'u');
@@ -30,11 +30,10 @@ export async function resolveDomain(
   domain: string,
   network: Network,
 ): Promise<string | null> {
-  const records = await Promise.all(
+  const records = await getRecords(
+    domain,
     network.recordKeys.flatMap((key) =>
-      METADATA_CONTRACTS.map(async (contract) =>
-        getRecord(contract, domain, key),
-      ),
+      METADATA_CONTRACTS.map((contract) => ({ contract, key })),
     ),
   );
 

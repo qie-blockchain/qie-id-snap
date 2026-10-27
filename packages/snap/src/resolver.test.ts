@@ -1,14 +1,14 @@
 import { beforeEach, describe, expect, it, jest } from '@jest/globals';
 
 import { METADATA_CONTRACTS } from './config';
-import { getRecord } from './contracts';
+import { getRecords } from './contracts';
 import type { Network } from './networks';
 import { EVM_NETWORK, getNetwork } from './networks';
 import { normalizeDomain, resolveDomain } from './resolver';
 
 jest.mock('./contracts');
 
-const getRecordMock = jest.mocked(getRecord);
+const getRecordsMock = jest.mocked(getRecords);
 
 const [WALLET_CONTRACT, HOVR_CONTRACT] = METADATA_CONTRACTS;
 const ADDRESS = '0xE63A7e2C9B068056916d02807A976d42d460C92f';
@@ -20,8 +20,8 @@ const ZERO_ADDRESS = '0x0000000000000000000000000000000000000000';
  * @param records - Record values keyed by `contract:key`.
  */
 function mockRecords(records: Record<string, string>) {
-  getRecordMock.mockImplementation(
-    async (contract, _domain, key) => records[`${contract}:${key}`] ?? null,
+  getRecordsMock.mockImplementation(async (_domain, queries) =>
+    queries.map(({ contract, key }) => records[`${contract}:${key}`] ?? null),
   );
 }
 
@@ -44,7 +44,7 @@ describe('normalizeDomain', () => {
 
 describe('resolveDomain', () => {
   beforeEach(() => {
-    getRecordMock.mockReset();
+    getRecordsMock.mockReset();
   });
 
   it('prefers the wallet contract over the Hovr contract', async () => {

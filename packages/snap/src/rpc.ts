@@ -9,45 +9,58 @@ import { QIE_RPC_URLS, RPC_TIMEOUT_MS } from './config';
 
 const EXECUTION_REVERTED_CODE = 3;
 
+export type Call = {
+  to: Hex;
+  data: Hex;
+};
+
 /**
- * Execute an `eth_call` on QIE Mainnet, falling back through each RPC endpoint.
+ * Execute `eth_call`s on QIE Mainnet as one JSON-RPC batch. The batch is sent
+ * to every RPC endpoint at once, and the first valid response wins.
  *
- * @param to - The contract address.
- * @param data - The ABI-encoded call data.
- * @returns The return data, or `null` if the call reverted.
+ * @param calls - The calls to execute.
+ * @returns The return data of each call, in order, or `null` for a call that
+ * reverted.
  * @throws If no endpoint returns a valid response.
  */
-export async function ethCall(to: Hex, data: Hex): Promise<Hex | null> {
-  for (const url of QIE_RPC_URLS) {
-    try {
-      return await request(url, to, data);
-    } catch {
-      continue;
-    }
-  }
-
-  throw new Error('All QIE RPC endpoints failed.');
+export async function ethCalls(
+  calls: readonly Call[],
+): Promise<(Hex | null)[]> {
+  return new Promise((resolve, reject) => {
+    Promise.all(
+      QIE_RPC_URLS.map(async (url) =>
+        request(url, calls).then(resolve, () => undefined),
+      ),
+    )
+      .then(() => reject(new Error('All QIE RPC endpoints failed.')))
+      .catch(reject);
+  });
 }
 
 /**
- * Send a single `eth_call` request to an RPC endpoint.
+ * Send a batch of `eth_call` requests to an RPC endpoint.
  *
  * @param url - The RPC endpoint.
- * @param to - The contract address.
- * @param data - The ABI-encoded call data.
- * @returns The return data, or `null` if the call reverted.
+ * @param calls - The calls to execute.
+ * @returns The return data of each call, in order, or `null` for a call that
+ * reverted.
  * @throws If the endpoint is unreachable or returns an unexpected response.
  */
-async function request(url: string, to: Hex, data: Hex): Promise<Hex | null> {
+async function request(
+  url: string,
+  calls: readonly Call[],
+): Promise<(Hex | null)[]> {
   const response = await fetch(url, {
     method: 'POST',
     headers: { 'Content-Type': 'application/json' },
-    body: JSON.stringify({
-      jsonrpc: '2.0',
-      id: 1,
-      method: 'eth_call',
-      params: [{ to, data }, 'latest'],
-    }),
+    body: JSON.stringify(
+      calls.map((call, id) => ({
+        jsonrpc: '2.0',
+        id,
+        method: 'eth_call',
+        params: [call, 'latest'],
+      })),
+    ),
     signal: AbortSignal.timeout(RPC_TIMEOUT_MS),
   });
 
@@ -57,13 +70,24 @@ async function request(url: string, to: Hex, data: Hex): Promise<Hex | null> {
 
   const body: unknown = await response.json();
 
-  if (isJsonRpcFailure(body) && body.error.code === EXECUTION_REVERTED_CODE) {
-    return null;
-  }
-
-  if (!isJsonRpcSuccess(body) || !isStrictHexString(body.result)) {
+  if (!Array.isArray(body)) {
     throw new Error('Invalid RPC response.');
   }
 
-  return body.result;
+  // Batch responses may arrive in any order, so match them by ID.
+  return calls.map((_call, id) => {
+    const item: unknown = body.find(
+      (entry: { id?: unknown } | null) => entry?.id === id,
+    );
+
+    if (isJsonRpcFailure(item) && item.error.code === EXECUTION_REVERTED_CODE) {
+      return null;
+    }
+
+    if (!isJsonRpcSuccess(item) || !isStrictHexString(item.result)) {
+      throw new Error('Invalid RPC response.');
+    }
+
+    return item.result;
+  });
 }
