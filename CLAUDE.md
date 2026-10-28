@@ -23,6 +23,10 @@ yarn lint:fix
 # Single test file / test name (run from packages/snap)
 yarn workspace @qie-blockchain/qie-id-snap jest src/resolver.test.ts
 yarn workspace @qie-blockchain/qie-id-snap jest -t 'resolves a QIE ID'
+
+# Live test: built Snap against QIE Mainnet (skipped unless QIE_LIVE=1).
+# Optional: QIE_LIVE_DOMAIN (default anish.qie), QIE_LIVE_ADDRESS to pin the expected address
+QIE_LIVE=1 yarn workspace @qie-blockchain/qie-id-snap jest src/index.live.test.ts
 ```
 
 CI (`.github/workflows/build-lint-test.yml`) fails if the working tree is dirty after build/lint/test, so commit the regenerated `snap.manifest.json` shasum after any change to Snap source.
