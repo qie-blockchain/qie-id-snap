@@ -8,6 +8,7 @@ The QIE ID Snap lets you send crypto to a QIE ID, such as `alice.qie`, instead o
 
 - [Getting started](#getting-started)
 - [Supported networks](#supported-networks)
+- [FAQs](#faqs)
 - [Troubleshooting](#troubleshooting)
 - [Safety tips](#safety-tips)
 - [Privacy](#privacy)
@@ -25,32 +26,86 @@ The QIE ID Snap lets you send crypto to a QIE ID, such as `alice.qie`, instead o
 
 A QIE ID can hold a different address for each type of network. The Snap picks the address that matches the network you are sending on.
 
-| You are sending on                                                             | Address the Snap uses    |
-| ------------------------------------------------------------------------------ | ------------------------ |
-| Any EVM network (Ethereum, QIE, BNB Chain, Polygon, Base, Arbitrum and others) | The ID's EVM address     |
-| Bitcoin mainnet and testnets                                                   | The ID's Bitcoin address |
-| Solana mainnet, devnet and testnet                                             | The ID's Solana address  |
-| TRON mainnet, Nile and Shasta                                                  | The ID's TRON address    |
+| You are sending on                                                             | Address the Snap uses    | Available on             |
+| ------------------------------------------------------------------------------ | ------------------------ | ------------------------ |
+| Any EVM network (Ethereum, QIE, BNB Chain, Polygon, Base, Arbitrum and others) | The ID's EVM address     | Free and premium QIE IDs |
+| Bitcoin mainnet and testnets                                                   | The ID's Bitcoin address | Premium QIE IDs only     |
+| Solana mainnet, devnet and testnet                                             | The ID's Solana address  | Premium QIE IDs only     |
+| TRON mainnet, Nile and Shasta                                                  | The ID's TRON address    | Premium QIE IDs only     |
 
-All EVM networks share one address, because an EVM address is the same on every EVM chain.
+All EVM networks share one address, because an EVM address is the same on every EVM chain. Free QIE IDs hold only an EVM address, so they resolve on EVM networks but not on Bitcoin, Solana or TRON.
 
-QIE IDs are always looked up on QIE Mainnet, whichever network you are sending on. You don't need QIE Mainnet added to MetaMask, and the lookup costs no gas.
+QIE IDs are always looked up on QIE Mainnet, whichever network you are sending on. You don't need QIE Mainnet added to MetaMask.
+
+## FAQs
+
+### What is a QIE ID?
+
+A readable name ending in `.qie`, such as `alice.qie`, registered on the QIE blockchain. Its owner links wallet addresses to it, so people can send funds to the name instead of a long address.
+
+### How do I send to a QIE ID?
+
+Install the Snap, open MetaMask's send screen and type the QIE ID in the recipient field. MetaMask shows the matching address for the network you're on. Check it, then confirm as normal. See [Getting started](#getting-started).
+
+### Which networks are supported?
+
+Every EVM network, plus Bitcoin, Solana and TRON. Bitcoin, Solana and TRON addresses can only be set on premium QIE IDs. See [Supported networks](#supported-networks).
+
+### What does the Snap not do?
+
+- It doesn't find the QIE ID for an address. It resolves names to addresses only.
+- It doesn't resolve QIE IDs on networks other than those listed in [Supported networks](#supported-networks).
+- It doesn't register QIE IDs or change their addresses.
+- It can't see your accounts, sign transactions or move funds.
+
+### Can the Snap access my funds or private keys?
+
+No. It has only two permissions:
+
+| Permission                 | What it allows                                           |
+| -------------------------- | -------------------------------------------------------- |
+| `endowment:name-lookup`    | Read `.qie` names you type in the send screen.           |
+| `endowment:network-access` | Connect to the QIE RPC to look up public QIE ID records. |
+
+It can't see your accounts, sign anything or move funds.
+
+### What data does the Snap send?
+
+Only the QIE ID you type. See [Privacy](#privacy).
+
+### Does it cost anything?
+
+No. The Snap is free, and lookups are read-only calls, so there are no gas fees. You only pay the normal network fee for the transaction you send.
+
+### Can I trust the address it shows?
+
+The Snap shows exactly what the QIE ID owner has set on-chain, read live at the time of the lookup. As with any transfer, check the address before you confirm, especially for large amounts. See [Safety tips](#safety-tips).
+
+### How do I get a QIE ID or update my addresses?
+
+Register or buy a QIE ID and manage its addresses at [id.qie.digital](https://id.qie.digital/). Changes show up in MetaMask on your next lookup.
+
+### Where can I get help?
+
+Open an issue at [GitHub Issues](https://github.com/qie-blockchain/qie-id-snap/issues). See [Getting help](#getting-help).
 
 ## Troubleshooting
 
-### Nothing appears when I type a QIE ID
+### MetaMask says no address was found
 
 Check each of these:
 
-- **The ID is spelled correctly** and ends in `.qie`. QIE IDs contain only letters and numbers. Capital letters are fine; `Alice.QIE` is treated as `alice.qie`.
+- **The ID is spelled correctly** and ends in `.qie`. QIE IDs contain only letters and numbers.
+- **The ending is lowercase.** MetaMask only passes names ending in lowercase `.qie` to the Snap, so `alice.QIE` won't resolve. Capitals in the name part, like `Alice.qie`, work fine.
 - **The ID is registered.** An unregistered ID resolves to nothing.
-- **The owner has set an address for this network.** For example, if the owner has set only an EVM address, the ID resolves on Ethereum but not on Solana. Ask the owner to add an address for the network you want.
+- **The owner has set an address for this network.** For example, a free QIE ID holds only an EVM address, so it resolves on Ethereum but not on Solana.
+- **The stored address is valid for this network.** The Snap won't show an address in the wrong format for the network you're on.
 - **The network is supported.** See [Supported networks](#supported-networks).
 - **The Snap is installed and enabled.** See [Updating and removing the Snap](#updating-and-removing-the-snap).
 
 ### The ID works on one network but not another
 
-The owner has set an address for some networks but not others, or the address they set isn't valid for that network. The Snap hides an address that doesn't match the network's format, so you can't send Bitcoin to a Solana address by mistake. Ask the owner to set an address for the network you are using.
+The owner has set an address for some networks but not others, or the address they set isn't valid for that network. The Snap hides an address that doesn't match the network's format, so you can't send Bitcoin to a Solana address by mistake. Free QIE IDs hold only an EVM address; Bitcoin, Solana and TRON addresses need a premium QIE ID. Ask the owner to set an address for the network you are using.
 
 ### Lookups fail now and then
 
