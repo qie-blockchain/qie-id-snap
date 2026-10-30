@@ -112,7 +112,7 @@ Don't submit pre-releases for allowlisting.
 ### Verify the published package
 
 1. Install it in MetaMask Flask, either with the console snippet above or with
-   the [Snap Install Tester](https://montoya.github.io/snaps-install-tester/)
+   the [Snap Install Tester](https://montoya.github.io/snap-install-tester/)
    and the Snap ID `npm:@qie-blockchain/qie-id-snap`.
 2. Run the manual checks in [Manual test checklist](#manual-test-checklist).
 
