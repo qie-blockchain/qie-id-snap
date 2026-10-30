@@ -42,7 +42,7 @@ QIE IDs are always looked up on QIE Mainnet, whichever network you are sending o
 
 Check each of these:
 
-- **The ID is spelled correctly** and ends in `.qie`. QIE IDs contain only letters, numbers and hyphens. Capital letters are fine; `Alice.QIE` is treated as `alice.qie`.
+- **The ID is spelled correctly** and ends in `.qie`. QIE IDs contain only letters and numbers. Capital letters are fine; `Alice.QIE` is treated as `alice.qie`.
 - **The ID is registered.** An unregistered ID resolves to nothing.
 - **The owner has set an address for this network.** For example, if the owner has set only an EVM address, the ID resolves on Ethereum but not on Solana. Ask the owner to add an address for the network you want.
 - **The network is supported.** See [Supported networks](#supported-networks).
@@ -67,7 +67,7 @@ A QIE ID owner can change their addresses at any time, and the Snap always shows
 ## Safety tips
 
 - **Check the resolved address before you confirm,** especially for large amounts. A typo in the ID can resolve to someone else's address.
-- **Watch for look-alike IDs** such as `alice-.qie` or `a1ice.qie`.
+- **Watch for look-alike IDs** such as `a1ice.qie` or `alicee.qie`.
 - **Transfers can't be reversed.** If you're unsure, send a small test amount first.
 - **The Snap can't move your funds.** It only looks up addresses. It can't see your accounts, sign transactions or access your keys.
 
