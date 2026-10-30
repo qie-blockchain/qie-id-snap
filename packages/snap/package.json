@@ -1,6 +1,6 @@
 {
   "name": "@qie-blockchain/qie-id-snap",
-  "version": "0.1.0",
+  "version": "0.1.1",
   "description": "Send to QIE IDs (name.qie) in MetaMask. Resolves a QIE ID to the owner's address on the network you are sending on.",
   "keywords": [
     "metamask",

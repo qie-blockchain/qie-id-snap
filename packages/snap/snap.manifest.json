@@ -1,5 +1,5 @@
 {
-  "version": "0.1.0",
+  "version": "0.1.1",
   "description": "Send to QIE IDs (name.qie) in MetaMask. Resolves a QIE ID to the owner's address on the network you are sending on.",
   "proposedName": "QIE ID",
   "repository": {
@@ -7,7 +7,7 @@
     "url": "https://github.com/qie-blockchain/qie-id-snap.git"
   },
   "source": {
-    "shasum": "3y3dQiQ7Lu2VkdRGmzEok00Er5q5CQ0qhBHAtK+lA6o=",
+    "shasum": "LuemHe7xLrbTfOP8pM9KJG0E0J7eZb9bL3MNdKuBzFs=",
     "location": {
       "npm": {
         "filePath": "dist/bundle.js",

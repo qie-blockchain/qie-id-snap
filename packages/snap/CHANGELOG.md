@@ -7,11 +7,18 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+## [0.1.1]
+
+### Changed
+
+- Update the Snap icon.
+
 ## [0.1.0]
 
 ### Added
 
 - Resolve QIE IDs to addresses on EVM, Bitcoin, Solana and TRON networks.
 
-[Unreleased]: https://github.com/qie-blockchain/qie-id-snap/compare/v0.1.0...HEAD
+[Unreleased]: https://github.com/qie-blockchain/qie-id-snap/compare/v0.1.1...HEAD
+[0.1.1]: https://github.com/qie-blockchain/qie-id-snap/compare/v0.1.0...v0.1.1
 [0.1.0]: https://github.com/qie-blockchain/qie-id-snap/releases/tag/v0.1.0
