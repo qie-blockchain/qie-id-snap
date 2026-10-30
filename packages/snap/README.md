@@ -44,4 +44,7 @@ Snap.
 
 ## Support
 
+See the [user guide](https://github.com/qie-blockchain/qie-id-snap/blob/main/docs/user-guide.md)
+for setup, supported networks and troubleshooting.
+
 Report issues at https://github.com/qie-blockchain/qie-id-snap/issues.
